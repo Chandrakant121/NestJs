@@ -10,9 +10,11 @@ async function bootstrap() {
   // nest g service tasks --no-spec
   // npm add class-validator class-transformer
   // npm add typeorm @nestjs/typeorm pg
+  // npm i bcrypt
 
   const app = await NestFactory.create(AppModule);
   // creating new nestjs app using appmodule
+
   app.useGlobalPipes(new ValidationPipe())     // validation config
   await app.listen(3000);
   // calling listen method on port 3000
