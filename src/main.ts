@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from "@nestjs/common"
+import { TransformInterceptor } from './transform.interceptor';
 
 async function bootstrap() {
   // npm run start
@@ -18,6 +19,7 @@ async function bootstrap() {
   // creating new nestjs app using appmodule
 
   app.useGlobalPipes(new ValidationPipe())     // validation config
+  app.useGlobalInterceptors(new TransformInterceptor());
   await app.listen(3000);
   // calling listen method on port 3000
 }

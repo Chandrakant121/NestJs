@@ -6,6 +6,8 @@ import { UpdateTaskStatusDto } from './dto/update-task-status-dto';
 import { GetTaskFilterDto } from './dto/get-task-filter-dto';
 import { UseGuards } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
+import { User } from 'src/auth/user.entity';
+import { GetUser } from 'src/auth/get-user.decorator';
 
 
 @Controller('tasks')
@@ -14,31 +16,31 @@ export class TasksController {
     constructor(private readonly taskService: TasksService) { }
 
     @Get('/:id')
-    getTaskById(@Param('id') id: string): Promise<Task> {
-        return this.taskService.getTaskById(id)
+    getTaskById(@Param('id') id: string, @GetUser() user: User): Promise<Task> {
+        return this.taskService.getTaskById(id, user)
     }
 
     @Post()
-    createTask(@Body() createTaskDto: createTaskDto): Promise<Task> {
-        return this.taskService.createTask(createTaskDto)
+    createTask(@Body() createTaskDto: createTaskDto, @GetUser() user: User): Promise<Task> {
+        return this.taskService.createTask(createTaskDto, user)
     }
 
     @Delete('/:id')
-    deleteTask(@Param('id') id: string): Promise<void> {
-        return this.taskService.deleteTask(id)
+    deleteTask(@Param('id') id: string, @GetUser() user: User): Promise<void> {
+        return this.taskService.deleteTask(id, user)
         // delete directly delete the entity but remove make a call to server and then remove entity
     }
 
     @Patch('/:id/status')
-    updateTaskStatus(@Param('id') id: string, @Body('') UpdateTaskStatusDto: UpdateTaskStatusDto): Promise<Task> {
+    updateTaskStatus(@Param('id') id: string, @Body('') UpdateTaskStatusDto: UpdateTaskStatusDto, @GetUser() user: User): Promise<Task> {
         const { status } = UpdateTaskStatusDto
-        return this.taskService.updateTaskStatus(id, status)
+        return this.taskService.updateTaskStatus(id, status, user)
     }
 
 
     @Get()
-    getTasks(@Query() filterDto: GetTaskFilterDto): Promise<Task[]> {
-        return this.taskService.getTasks(filterDto)
+    getTasks(@Query() filterDto: GetTaskFilterDto, @GetUser() user: User): Promise<Task[]> {
+        return this.taskService.getTasks(filterDto, user)
     }
 }
 
