@@ -11,6 +11,8 @@ async function bootstrap() {
   // npm add class-validator class-transformer
   // npm add typeorm @nestjs/typeorm pg
   // npm i bcrypt
+  // npm i @nestjs/jwt @nestjs/passport passport passport-jwt
+  // npm i @types/passport-jwt
 
   const app = await NestFactory.create(AppModule);
   // creating new nestjs app using appmodule

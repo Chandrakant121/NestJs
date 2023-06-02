@@ -4,9 +4,12 @@ import { Task } from './task.entity';
 import { createTaskDto } from './dto/create-task-dto';
 import { UpdateTaskStatusDto } from './dto/update-task-status-dto';
 import { GetTaskFilterDto } from './dto/get-task-filter-dto';
+import { UseGuards } from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
 
 
 @Controller('tasks')
+@UseGuards(AuthGuard())
 export class TasksController {
     constructor(private readonly taskService: TasksService) { }
 
